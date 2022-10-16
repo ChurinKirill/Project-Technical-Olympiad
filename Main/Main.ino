@@ -23,7 +23,7 @@ void setup()
 }
 void loop()
 {
-  if (!digitalRead(button_toggle_cond_pin))
+  if (!digitalRead(button_toggle_cond_pin)) // Высчитываем нормалиные значения
   {
     lcd.clear();
     lcd.print("...");
@@ -45,7 +45,7 @@ void loop()
     float pressure = bme.readPressure();
     float temperature = bme.readTemperature();
     // Проверка на несоответствие нормальным показателям
-    if (pressure < pressure_delta - 1000 || temperature > temperature_delta + 0.2) // Учитываем погрешность вычислений
+    if (pressure < pressure_delta - 100 || temperature > temperature_delta + 0.3) // Учитываем погрешность вычислений
     {
       digitalWrite(LED_BUILTIN, HIGH);
       delay(100);
@@ -64,15 +64,23 @@ void loop()
     
     if (stat == temp_cond)
     {
+      lcd.clear();
       lcd.setCursor(0, 0);
       lcd.print(pressure);
-      lcd.print(" Pa      ");
+      lcd.print(" Pa");
+      lcd.setCursor(0, 1);
+      lcd.print(pressure_delta);
+      lcd.print(" Pa");
     }
     else if (stat == pres_cond)
     {
+      lcd.clear();
       lcd.setCursor(0, 0);
       lcd.print(temperature);
-      lcd.print(" " + String(char(223)) + "C      ");
+      lcd.print(" " + String(char(223)) + "C");
+      lcd.setCursor(0, 1);
+      lcd.print(temperature_delta);
+      lcd.print(" " + String(char(223)) + "C");
     }
     delay(100);
   }
