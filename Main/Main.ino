@@ -18,26 +18,14 @@ void setup()
   lcd.begin(16, 2);
   bme.begin(0x76);
   pinMode(button_toggle_display_pin, INPUT_PULLUP);
-  pinMode(button_toggle_cond_pin, INPUT_PULLUP);
+  pinMode(button_toggle_cond_pin, INPUT_PULLUP);a
   pinMode(LED_BUILTIN, OUTPUT);
 }
 void loop()
 {
   if (!digitalRead(button_toggle_cond_pin)) // Высчитываем нормалиные значения
   {
-    lcd.clear();
-    lcd.print("...");
-    for (int i = 0; i < 5; i++)
-    {
-      sum_pressure += bme.readPressure();
-      sum_temperature += bme.readTemperature();
-      delay(200);
-    }
-    // 5 - кол-во вычислений. Пока 5
-    pressure_delta = sum_pressure / 5;
-    temperature_delta = sum_temperature / 5;
-    sum_pressure = 0; sum_temperature = 0;
-    lcd.clear();
+    calcNormal();
   }
   else
   {
@@ -66,11 +54,11 @@ void loop()
     {
       lcd.clear();
       lcd.setCursor(0, 0);
-      lcd.print(pressure);
-      lcd.print(" Pa");
+      lcd.print(Pa_To_kPa(pressure));
+      lcd.print(" kPa");
       lcd.setCursor(0, 1);
-      lcd.print(pressure_delta);
-      lcd.print(" Pa");
+      lcd.print(Pa_To_kPa(pressure_delta));
+      lcd.print(" kPa");
     }
     else if (stat == pres_cond)
     {
@@ -84,4 +72,28 @@ void loop()
     }
     delay(100);
   }
+}
+
+
+void calcNormal()
+{
+    lcd.clear();
+    lcd.print("...");
+    for (int i = 0; i < 5; i++)
+    {
+      sum_pressure += bme.readPressure();
+      sum_temperature += bme.readTemperature();
+      delay(200);
+    }
+    // 5 - кол-во вычислений. Пока 5
+    pressure_delta = sum_pressure / 5;
+    temperature_delta = sum_temperature / 5;
+    sum_pressure = 0; sum_temperature = 0;
+    lcd.clear();
+}
+
+
+float Pa_To_kPa(float numb){
+  float result = numb / 1000;
+  return result;
 }
