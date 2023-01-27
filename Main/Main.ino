@@ -18,7 +18,7 @@ void setup()
   lcd.begin(16, 2);
   bme.begin(0x76);
   pinMode(button_toggle_display_pin, INPUT_PULLUP);
-  pinMode(button_toggle_cond_pin, INPUT_PULLUP);a
+  pinMode(button_toggle_cond_pin, INPUT_PULLUP);
   pinMode(LED_BUILTIN, OUTPUT);
 }
 void loop()
