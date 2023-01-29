@@ -70,7 +70,7 @@ void loop()
       lcd.print(temperature_delta);
       lcd.print(" " + String(char(223)) + "C");
     }
-    delay(100);
+    delay(250);
   }
 }
 
@@ -85,7 +85,7 @@ void calcNormal()
       sum_temperature += bme.readTemperature();
       delay(200);
     }
-    // 5 - кол-во вычислений. Пока 5
+    // 5 - кол-во вычислений
     pressure_delta = sum_pressure / 5;
     temperature_delta = sum_temperature / 5;
     sum_pressure = 0; sum_temperature = 0;
