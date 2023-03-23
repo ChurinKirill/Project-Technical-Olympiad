@@ -3,6 +3,8 @@
 
 #define button_toggle_display_pin 6
 #define button_toggle_cond_pin 5
+#define buzzer_pin 4
+#define led_alert_pin 3
 #define temp_cond 0
 #define pres_cond 1
 
@@ -35,12 +37,13 @@ void loop()
     // Проверка на несоответствие нормальным показателям
     if (pressure < pressure_delta - 100 || temperature > temperature_delta + 0.3) // Учитываем погрешность вычислений
     {
-      digitalWrite(LED_BUILTIN, HIGH);
+      digitalWrite(led_alert_pin, HIGH);
+      tone(buzzer_pin, 4500, 40);
       delay(100);
-      digitalWrite(LED_BUILTIN, LOW);
+      digitalWrite(led_alert_pin, LOW);
     }
     else
-      digitalWrite(LED_BUILTIN, LOW);
+      digitalWrite(led_alert_pin, LOW);
     if (wasUp && !isUp)
     {
       delay(50);
