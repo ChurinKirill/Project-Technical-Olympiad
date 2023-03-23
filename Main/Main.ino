@@ -35,7 +35,7 @@ void loop()
     float pressure = bme.readPressure();
     float temperature = bme.readTemperature();
     // Проверка на несоответствие нормальным показателям
-    if (pressure < pressure_delta - 100 || temperature > temperature_delta + 0.3) // Учитываем погрешность вычислений
+    if (pressure < pressure_delta - 100 || pressure > pressure_delta + 500 || temperature > temperature_delta + 0.5 || temperature < temperature_delta - 2.5) // Учитываем погрешность вычислений
     {
       digitalWrite(led_alert_pin, HIGH);
       tone(buzzer_pin, 4500, 40);
